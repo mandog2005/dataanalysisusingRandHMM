@@ -32,7 +32,7 @@ print(avgActivePowerMedianA)
 #function for computing mode for part A
 avgActivePowerModeA <- getmode(df$Global_active_power)
 
-#function for computing std for part 1
+#function for computing std for part A
 StdActivePowerA <- sd(df$Global_active_power)
 print(StdActivePowerA)
 
@@ -42,15 +42,15 @@ print(StdActivePowerA)
 ####################################################
 
 
-#function for computing Arithmetic mean for part A
+#function for computing Arithmetic mean for part B
 avgReactivePowerArithMeanB <- mean(df$Global_reactive_power, na.rm = TRUE)
 print(avgReactivePowerArithMeanB)
 
-#function for computing Geometric mean for part A
+#function for computing Geometric mean for part B
 avgReactivePowerGeometricMeanB <- exp(mean(log(df$Global_reactive_power),na.rm = TRUE))
 print(avgReactivePowerGeometricMeanB)
 
-#function for computing median for part A
+#function for computing median for part B
 avgReactivePowerMedianB <- median(df$Global_reactive_power, na.rm = TRUE)
 print(avgReactivePowerMedianB)
 
@@ -70,22 +70,22 @@ print(StdReactivePowerB)
 
 
 
-.#function for computing Arithmetic mean for part B
+.#function for computing Arithmetic mean for part C
 avgVoltageArithMeanC <- mean(df$Voltage,na.rm = TRUE)
 print(avgVoltageArithMeanC)#checking value
 
-#function for computing Geometric mean for part B
+#function for computing Geometric mean for part C
 avgVoltageGeoMeanC <- exp(mean(log(df$Voltage),na.rm = TRUE))
 print(avgVoltageGeoMeanC) #checking value
 
-#function for computing median for part B
+#function for computing median for part C
 avgVoltageMedianC <- median(df$Voltage,na.rm = TRUE)
 print(avgVoltageMedianC) #checking value
 
-#function for computing mode for part B
+#function for computing mode for part C
 avgVoltageModeC <- getmode(df$Voltage, na.rm = TRUE)
 
-#function for computing std for part B
+#function for computing std for part C
 stdVoltageC <- sd(df$Voltage,na.rm = TRUE)
 print(stdVoltageC)
 
@@ -96,4 +96,5 @@ print(stdVoltageC)
 maxValueWeekdayActive <- max(df[,3],na.rm = TRUE & wday(df[,1]) > 0 & wday(df[,1]) < 6)
 #min value for active power
 minValueWeekdayActive <- min(df[,3],na.rm = TRUE & wday(df[,1]) > 0 & wday(df[,1]) < 6)
+
 
