@@ -1,3 +1,5 @@
+
+
 getwd()
 df <- read.table("C:/Users/alial/OneDrive/Desktop/CMPT318/Group Assignments/Assignment 1/Group_Assignment_1_Dataset.txt", sep = "," , header = TRUE)
 #as.POSIXlt.Date(df[,1],format = "");
@@ -6,6 +8,9 @@ timeHour <- format(as.POSIXct(df$Time,format="%H:%M:%S"),"%H", header = TRUE) #h
 dfHours <- data.frame(timeHour)
 dfHours <- as.numeric(as.character(dfHours$timeHour))
 remove(timeHour)#waste of RAM
+
+
+df <- read.csv("C:/Users/alial/OneDrive/Desktop/318_ASSIGNMENTS_REPOSITORY/CMPT318_FALL2021/Assignment 1/Group_Assignment_1_Dataset.csv", header = TRUE)
 
 library(lubridate)
 # function to get the mode.
@@ -55,15 +60,17 @@ print(avgActivePowerGeometricMeanA)
 
 
 #function for computing median for part A
-avgActivePowerMedianA <- median(df$Global_active_power)
+#na.rm = TRUE just means we ignore null values in this case.
+avgActivePowerMedianA <- median(df$Global_active_power, na.rm = TRUE)
 print(avgActivePowerMedianA)
 
 
 #function for computing mode for part A
-avgActivePowerModeA <- getmode(df$Global_active_power)
+avgActivePowerModeA <- getmode(df$Global_active_power, na.rm = TRUE)
+print(avgActivePowerModeA)
 
 #function for computing std for part A
-StdActivePowerA <- sd(df$Global_active_power)
+StdActivePowerA <- sd(df$Global_active_power, na.rm = TRUE)
 print(StdActivePowerA)
 
 #Task A done
