@@ -120,14 +120,14 @@ avgVoltageGeoMeanC <- exp(mean(log(df$Voltage) ,na.rm = TRUE))
 print(avgVoltageGeoMeanC) #checking value
 
 #function for computing median for part C week 10
-avgVoltageMedianC <- median(df$Voltage& df$Date >= "2007-03-05" & df$Date <= "2007-03-11",na.rm = TRUE)
+avgVoltageMedianC <- median(df$Voltage,na.rm = TRUE)
 print(avgVoltageMedianC) #checking value
 
 #function for computing mode for part C week 10
-avgVoltageModeC <- getmode(df$Voltage& df$Date >= "2007-03-05" & df$Date <= "2007-03-11", na.rm = TRUE)
+avgVoltageModeC <- getmode(df$Voltage, na.rm = TRUE)
 
 #function for computing std for part C week 10
-stdVoltageC <- sd(df$Voltage& df$Date >= "2007-03-05" & df$Date <= "2007-03-11",na.rm = TRUE)
+stdVoltageC <- sd(df$Voltage,na.rm = TRUE)
 print(stdVoltageC)
 
 #Task C Done
