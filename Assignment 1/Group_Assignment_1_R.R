@@ -260,6 +260,7 @@ ggplot()+
 ggplot()+
   layer(data = df, mapping = aes(x=Global_reactive_power, y=Global_intensity), geom = "point",stat="identity", position = position_identity())
 
+
 #weakly-strong correlated values corr .50 < i < .70
 
 ggplot()+
@@ -285,8 +286,8 @@ dfNight %>%
   geom_line() +
   geom_point()
 
-
-fit_linearMorning <- lm(Global_intensity~Time,dfMorning)
+#highly correlated that is negatively valued.
+fit_linearMorning <- lm(Global_intensity~Global_reactive_power,dfMorning)
 fit_linearNight <- lm(Global_intensity~Time,dfNight)
 fit_polynomial <- lm(Global_intensity ~ poly(y, 2, raw=TRUE) ,dfMorning)
 
