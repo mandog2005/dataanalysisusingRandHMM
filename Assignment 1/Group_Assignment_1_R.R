@@ -271,7 +271,7 @@ ggplot()+
 
 ########################################################################
 
-ggplot(data = df, aes(Time, Global_intensity)) +
+ggplot(data = df1, aes(Time, Global_intensity)) +
   geom_point()
 
 dfMorning %>%
