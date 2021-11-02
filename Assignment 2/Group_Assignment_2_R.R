@@ -391,8 +391,9 @@ sma52 = rollmean(week52.intensity,10)
 
 
 
-plot(week10.intensity)
-lines(sma9,col = "red")
+plot(sma7
+     )
+
 
 #smacompare = rollmean(allweek.intensity,10)
 #lines(smacompare,col = "red")
