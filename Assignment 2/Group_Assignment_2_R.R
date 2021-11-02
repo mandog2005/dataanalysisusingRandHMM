@@ -322,7 +322,7 @@ week52.intensity = zoo(df52$Global_intensity,
 
 
 
-smaAll = rollmean(allweek.intensity,180)
+smaAll = rollmean(allweek.intensity,10)
 
 sma1 = rollmean(week1.intensity,10)
 sma2 = rollmean(week2.intensity,10)
@@ -391,8 +391,10 @@ sma52 = rollmean(week52.intensity,10)
 
 
 
-plot(sma7
-     )
+write.csv(smaAll,"C:/Users/alial/OneDrive/Desktop/CMPT318/Group Assignments/Assignment 2/SMA_global_intensity.csv", row.names = FALSE)
+
+
+dfsmaAll <- data.frame(smaAll)
 
 
 #smacompare = rollmean(allweek.intensity,10)
