@@ -9,7 +9,7 @@ library(dplyr)
 library(depmixS4)
 
 getwd()
-setwd("C:/Users/alial/OneDrive/Desktop/CMPT318/Group Assignments/Assignment 3")
+setwd("C:/Users/alial/OneDrive/Desktop/318_ASSIGNMENTS_REPOSITORY/CMPT318_FALL2021/Assignment 3")
 df <- read.table("Group_Assignment_3_Dataset.txt" , header = TRUE, sep = ",")
 set.seed(1)
 dates <- dmy(df$Date)
@@ -173,6 +173,12 @@ dfAll <- bind_rows(dfAll, df51)
 dfAll <- bind_rows(dfAll, df52)
 dfAll <- bind_rows(dfAll, df53)
 
-dfAll$Global_active_power <- as.numeric(dfAll$Global_active_power)
+#converting ntimes vector to numeric to work with.
+ntimes1 <- as.numeric(ntimes1$ï..NTIMES)
 
-model <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =3, ntimes = ntimes1)
+
+model1 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =9, ntimes = ntimes1)
+fm1 <- fit(model1)
+summary(fm1)
+
+fm2 <- fit(model2)
