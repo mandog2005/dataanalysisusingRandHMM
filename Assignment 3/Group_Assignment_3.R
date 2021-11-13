@@ -24,49 +24,48 @@ ntimes1 <- read.csv("ntimes.csv" , header = TRUE, sep = ",")
 
 #df1 to df16
 
-df1 <- df[df$Date >= "2007-01-01" & df$Date <= "2007-01-01" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df2 <- df[df$Date >= "2007-01-08" & df$Date <= "2007-01-08" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df3 <- df[df$Date >= "2007-01-15" & df$Date <= "2007-01-15" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df4 <- df[df$Date >= "2007-01-22" & df$Date <= "2007-01-22" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df5 <- df[df$Date >= "2007-01-29" & df$Date <= "2007-01-29" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df6 <- df[df$Date >= "2007-02-05" & df$Date <= "2007-02-05" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df7 <- df[df$Date >= "2007-02-10" & df$Date <= "2007-02-10" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df1 <- df[df$Date >= "2007-01-01" & df$Date <= "2007-01-01" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df2 <- df[df$Date >= "2007-01-08" & df$Date <= "2007-01-08" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df3 <- df[df$Date >= "2007-01-15" & df$Date <= "2007-01-15" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df4 <- df[df$Date >= "2007-01-22" & df$Date <= "2007-01-22" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df5 <- df[df$Date >= "2007-01-29" & df$Date <= "2007-01-29" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df6 <- df[df$Date >= "2007-02-05" & df$Date <= "2007-02-05" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df7 <- df[df$Date >= "2007-02-10" & df$Date <= "2007-02-10" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 #df8 <- df[df$Date >= "2007-02-10" & df$Date <= "2007-02-10" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df9 <- df[df$Date >= "2007-02-24" & df$Date <= "2007-02-24" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df10 <- df[df$Date >= "2007-03-02" & df$Date <= "2007-03-02" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df11 <- df[df$Date >= "2007-03-09" & df$Date <= "2007-03-09" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df9 <- df[df$Date >= "2007-02-24" & df$Date <= "2007-02-24" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df10 <- df[df$Date >= "2007-03-02" & df$Date <= "2007-03-02" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df11 <- df[df$Date >= "2007-03-09" & df$Date <= "2007-03-09" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 
-df12 <- df[df$Date >= "2007-03-16" & df$Date <= "2007-03-16" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df13 <- df[df$Date >= "2007-03-22" & df$Date <= "2007-03-22" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df14 <- df[df$Date >= "2007-03-29" & df$Date <= "2007-03-29" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df15 <- df[df$Date >= "2007-04-05" & df$Date <= "2007-04-05" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df16 <- df[df$Date >= "2007-04-12" & df$Date <= "2007-04-12" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-
+df12 <- df[df$Date >= "2007-03-16" & df$Date <= "2007-03-16" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df13 <- df[df$Date >= "2007-03-22" & df$Date <= "2007-03-22" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df14 <- df[df$Date >= "2007-03-29" & df$Date <= "2007-03-29" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df15 <- df[df$Date >= "2007-04-05" & df$Date <= "2007-04-05" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df16 <- df[df$Date >= "2007-04-12" & df$Date <= "2007-04-12" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 
 # df16 to df20 ---- 
 
 #df17 <- df[df$Date >= "2007-04-19" & df$Date <= "2007-04-19" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df18 <- df[df$Date >= "2007-04-26" & df$Date <= "2007-04-26" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df19 <- df[df$Date >= "2007-05-03" & df$Date <= "2007-05-03" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df20 <- df[df$Date >= "2007-05-10" & df$Date <= "2007-05-10" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df21 <- df[df$Date >= "2007-05-17" & df$Date <= "2007-05-17" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df18 <- df[df$Date >= "2007-04-26" & df$Date <= "2007-04-26" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df19 <- df[df$Date >= "2007-05-03" & df$Date <= "2007-05-03" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df20 <- df[df$Date >= "2007-05-10" & df$Date <= "2007-05-10" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df21 <- df[df$Date >= "2007-05-17" & df$Date <= "2007-05-17" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 
 
 # df21 to df25 ------
 
-df22 <- df[df$Date >= "2007-05-24" & df$Date <= "2007-05-24" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df23 <- df[df$Date >= "2007-05-31" & df$Date <= "2007-05-31" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df24 <- df[df$Date >= "2007-06-07" & df$Date <= "2007-06-07" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df25 <- df[df$Date >= "2007-06-14" & df$Date <= "2007-06-14" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df26 <- df[df$Date >= "2007-06-21" & df$Date <= "2007-06-21" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df22 <- df[df$Date >= "2007-05-24" & df$Date <= "2007-05-24" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df23 <- df[df$Date >= "2007-05-31" & df$Date <= "2007-05-31" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df24 <- df[df$Date >= "2007-06-07" & df$Date <= "2007-06-07" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df25 <- df[df$Date >= "2007-06-14" & df$Date <= "2007-06-14" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df26 <- df[df$Date >= "2007-06-21" & df$Date <= "2007-06-21" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 
 
 # df26 to df30 -----
 
-df27 <- df[df$Date >= "2007-06-28" & df$Date <= "2007-06-28" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df28 <- df[df$Date >= "2007-07-05" & df$Date <= "2007-07-05" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df29 <- df[df$Date >= "2007-07-12" & df$Date <= "2007-07-12" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df30 <- df[df$Date >= "2007-07-19" & df$Date <= "2007-07-19" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df27 <- df[df$Date >= "2007-06-28" & df$Date <= "2007-06-28" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df28 <- df[df$Date >= "2007-07-05" & df$Date <= "2007-07-05" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df29 <- df[df$Date >= "2007-07-12" & df$Date <= "2007-07-12" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df30 <- df[df$Date >= "2007-07-19" & df$Date <= "2007-07-19" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 
 
 
@@ -75,8 +74,8 @@ df30 <- df[df$Date >= "2007-07-19" & df$Date <= "2007-07-19" & hour(df$Time) > 7
 
 #df31 <- df[df$Date >= "2007-07-26" & df$Date <= "2007-07-26" & hour(df$Time) > 7 & hour(df$Time) < 10,]
 #df32 <- df[df$Date >= "2007-08-02" & df$Date <= "2007-08-02" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df33 <- df[df$Date >= "2007-08-09" & df$Date <= "2007-08-09" & hour(df$Time) > 7 & hour(df$Time) < 10,]
-df34 <- df[df$Date >= "2007-08-16" & df$Date <= "2007-08-16" & hour(df$Time) > 7 & hour(df$Time) < 10,]
+df33 <- df[df$Date >= "2007-08-09" & df$Date <= "2007-08-09" & hour(df$Time) > 7 & hour(df$Time) < 12,]
+df34 <- df[df$Date >= "2007-08-16" & df$Date <= "2007-08-16" & hour(df$Time) > 7 & hour(df$Time) < 12,]
 #df35 <- df[df$Date >= "2007-08-23" & df$Date <= "2007-08-23" & hour(df$Time) > 7 & hour(df$Time) < 10,]
 #df36 <- df[df$Date >= "2007-08-30" & df$Date <= "2007-08-30" & hour(df$Time) > 7 & hour(df$Time) < 10,]
 
@@ -178,9 +177,19 @@ dfAll <- bind_rows(dfAll, df34)
 #dfAll <- bind_rows(dfAll, df52)
 #dfAll <- bind_rows(dfAll, df53)
 
+dfAll$Global_active_power <- scale(dfAll$Global_active_power)
+dfAll$Global_intensity <- scale(dfAll$Global_intensity)
+dfAll$Global_reactive_power <- scale(dfAll$Global_reactive_power)
+
 ntimes1 <- as.numeric(ntimes1$ï..NTIMES)
-model <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =8, ntimes = ntimes1 )
+model <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =4, ntimes = ntimes1 )
+BIC(model)
 fm1 <- fit(model)
+
+
+model2 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =3 , ntimes = ntimes1 )
+BIC(model2)
+fm2 <- fit(model2)
 
 summary(model)
 print(model)
