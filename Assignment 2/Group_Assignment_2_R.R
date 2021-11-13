@@ -22,7 +22,7 @@ df$Time <- df$Time <- as_datetime(df$Date + hms(df$Time))
 
 # df1 to df15 ------
 
-df1 <- df[df$Date >= "2008-01-01" & df$Date <= "2008-01-07",]
+df1 <- df[df$Date >= "2007-01-01" & df$Date >= "2007-01-07" & hour(df$Time) > 7 & hour(df$Time) < 10,]
 df2 <- df[df$Date >= "2008-01-08" & df$Date <= "2008-01-14",]
 df3 <- df[df$Date >= "2008-01-15" & df$Date <= "2008-01-21",]
 df4 <- df[df$Date >= "2008-01-22" & df$Date <= "2008-01-28",]
