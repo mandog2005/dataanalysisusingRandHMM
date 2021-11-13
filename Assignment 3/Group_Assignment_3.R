@@ -202,7 +202,31 @@ model6 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =8, nt
 fm6 <- fit(model6)
 
 
+model7 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =9, ntimes = ntimes1 )
+fm7 <- fit(model7)
+
+model8 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =10, ntimes = ntimes1 )
+fm8 <- fit(model8)
+
+model9 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =11, ntimes = ntimes1 )
+fm9 <- fit(model4)
 
 
-plot(1:5,c(BIC(fm1),BIC(fm2),BIC(fm3),BIC(fm4),BIC(fm5)),ty="b")
-                
+model10 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =12, ntimes = ntimes1 )
+fm10 <- fit(modell0)
+
+model11 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =13, ntimes = ntimes1 )
+fm11 <- fit(model11)
+
+
+model12 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =14, ntimes = ntimes1 )
+fm12 <- fit(model12)
+
+model13 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =1, ntimes = ntimes1 )
+fm13 <- fit(model13)
+
+
+
+plot(1:13,c(BIC(fm1),BIC(fm2),BIC(fm3),BIC(fm4),BIC(fm5), BIC(fm6), BIC(fm7), BIC(fm8), BIC(fm9),BIC(fm10),BIC(fm11),BIC(fm12),BIC(fm13)),ty="b")
+
+                     
