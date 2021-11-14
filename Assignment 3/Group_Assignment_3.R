@@ -177,7 +177,7 @@ dfAll <- bind_rows(dfAll, df34)
 dfAll$Global_active_power <- scale(dfAll$Global_active_power)
 dfAll$Global_intensity <- scale(dfAll$Global_intensity)
 dfAll$Global_reactive_power <- scale(dfAll$Global_reactive_power)
-ntimes1 <- as.numeric(ntimes1$ï..NTIMES)
+ntimes1 <- as.numeric(ntimes1$?..NTIMES)
 
 model1 <- depmix(response =dfAll$Global_intensity~1, data =dfAll, nstates =3, ntimes = ntimes1 )
 fm1 <- fit(model1)
@@ -229,4 +229,34 @@ fm13 <- fit(model13)
 
 plot(1:13,c(BIC(fm1),BIC(fm2),BIC(fm3),BIC(fm4),BIC(fm5), BIC(fm6), BIC(fm7), BIC(fm8), BIC(fm9),BIC(fm10),BIC(fm11),BIC(fm12),BIC(fm13)),ty="b")
 
-                     
+
+############ Mike's code ###################
+
+model8 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =16, ntimes = ntimes1 )
+fm8 <- fit(model7)
+
+
+
+model8 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =13, ntimes = ntimes1 )
+fm8 <- fit(model8)
+
+
+model8 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =12, ntimes = ntimes1 )
+fm8 <- fit(model9)
+
+
+model10 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =7, ntimes = ntimes1 )
+fm10 <- fit(model10)
+
+
+model11 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =4, ntimes = ntimes1 )
+fm11 <- fit(model11)
+
+model12 <- depmix(response =dfAll$Global_active_power~1, data =dfAll, nstates =2, ntimes = ntimes1 )
+fm12 <- fit(model12)
+
+plot(1:6,c(BIC(fm7),BIC(fm8),BIC(fm9),BIC(fm10),BIC(fm11), BIC(fm12)),ty="b")
+
+
+
+
