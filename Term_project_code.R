@@ -1,20 +1,14 @@
-library(zoo)
-library(lubridate)
-library(ggplot2)
-library(TTR)
-library(tidyverse)
-library(dplyr)
-library(depmixS4)
+View(df)
+df$Global_active_power <- as.numeric(df$Global_active_power)
+pca <- prcomp(na.omit(df1[,3:9]),scale=TRUE)
+pca.var.per <- round(pca.var/sum(pca.var)*100, 1)
+barplot(pca.var.per, main="Scree Plot", xlab="Principal Component", ylab="Percent Variation")
 
-getwd()
-setwd("C:/Users/ahalden/Desktop/Term Project")
-df <- read.table("TermProjectData.txt",header = TRUE,sep= ",")
-dfNum <- subset(df, )
+pca
 
-dates <- dmy(df$Date)
-df$Date <- as.Date(dmy(df$Date))
-remove(dates)
+plot(pca, type = "l")
 
-df$Time <- as_datetime(df$Date + hms(df$Time))
+pca.var <- pca$sdev^2
 
-pca <- prcomp(t(df$Global_active_power), scale=TRUE, na.action = na.omit) 
+
+biplot(pca, scale = 0)
