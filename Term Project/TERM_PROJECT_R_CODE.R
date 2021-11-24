@@ -19,6 +19,8 @@ df$Date<- as.Date(dmy(df$Date))
 remove(dates)
 df$Time <- df$Time <- as_datetime(df$Date + hms(df$Time))
 
+library(imputeTS)
+df$Global_active_power <- na.kalman(df$Global_active_power)
 
 
 #this is the PCA analysis part
@@ -83,25 +85,43 @@ list2env(list_of_dfs, envir=.GlobalEnv)
 
 
 
-dfDaily1 <- df[df$Date >= "2006-12-18" & df$Date <= "2006-12-23"  & hour(df$Time) > 5 & hour(df$Time) < 11,]
-dfDaily2 <- df[df$Date >= "2006-12-24" & df$Date <= "2006-12-29"  & hour(df$Time) > 5 & hour(df$Time) < 11,]
-dfDaily3 <- df[df$Date >= "2006-12-18" & df$Date <= "2006-12-23"  & hour(df$Time) > 5 & hour(df$Time) < 11,]
-dfDaily4 <- df[df$Date >= "2006-12-24" & df$Date <= "2006-12-29"  & hour(df$Time) > 5 & hour(df$Time) < 11,]
-dfDaily5 <- df[df$Date >= "2006-12-18" & df$Date <= "2006-12-23"  & hour(df$Time) > 5 & hour(df$Time) < 11,]
+dfDaily1 <- df[df$Date >= "2006-12-18" & df$Date <= "2006-12-22"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily2 <- df[df$Date >= "2006-12-25" & df$Date <= "2006-12-29"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily3 <- df[df$Date >= "2007-01-01" & df$Date <= "2007-01-05"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily4 <- df[df$Date >= "2007-01-08" & df$Date <= "2007-01-12"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily5 <- df[df$Date >= "2007-01-15" & df$Date <= "2007-01-19"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+
+dfDaily6 <- df[df$Date >= "2007-01-22" & df$Date <= "2007-01-26"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily7 <- df[df$Date >= "2007-01-29" & df$Date <= "2007-02-02"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily8 <- df[df$Date >= "2007-02-05" & df$Date <= "2007-02-09"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily9 <- df[df$Date >= "2007-02-12" & df$Date <= "2007-02-16"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+dfDaily10 <- df[df$Date >= "2007-02-19" & df$Date <= "2007-02-23"  & hour(df$Time) > 5 & hour(df$Time) < 9,]
+
+dfAll <- bind_rows(dfDaily1, dfDaily2)
+dfAll <- bind_rows(dfAll, dfDaily3)
+dfAll <- bind_rows(dfAll, dfDaily4)
+dfAll <- bind_rows(dfAll, dfDaily5)
+
+dfAll <- bind_rows(dfAll, dfDaily6)
+dfAll <- bind_rows(dfAll, dfDaily7)
+dfAll <- bind_rows(dfAll, dfDaily8)
+dfAll <- bind_rows(dfAll, dfDaily9)
+dfAll <- bind_rows(dfAll, dfDaily10)
+
+
+ntim <- read.csv("ntimes.csv" , header = TRUE, sep = ",")
+ntim <- as.numeric(ntim$ï..NTIMES)
 
 
 
-week.intensity1 = zoo(dfDaily1$Global_active_power)
-week.intensity2 = zoo(dfDaily2$Global_active_power)
+#mod1 <- depmix(Global_active_power~1, data = dfDaily1, nstates = 20, ntimes= c(1800))
 
-sma1 = rollmean(week.intensity1,10)
-sma2 = rollmean(week.intensity2,10)
+for(i in 4:14)
+{
+  print(`i`)
+  mod<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAll, nstates = i,family=list(gaussian(),multinomial("identity")), ntimes = ntim)
+  fm <- fit(mod)
+  print(fm)
+  
+}
 
-autoplot(sma2)
-
-mod1 <- depmix(Global_active_power~1, data = dfDaily1, nstates = 23)
-mod1 <- depmix(list(dfDaily1$Global_active_power~1,dfDaily1$Global_intensity~1), data = iris, nstates = 2,family=list(gaussian(),multinomial("identity"), ntimes = c(1800)))
-fm1 <- fit(mod1)
-
-summary(fm1)
-print(fm1)
