@@ -1,3 +1,18 @@
+11/26/2021
+
+WHAT'S NEW:
+
+WORKING ON HMM FINISHING ASSIGNMENT.
+
+UPLOADED PRESENTATION SLIDES.
+
+DUE DEC 5TH.
+
+
+
+
+THANKS
+===================================================================
 WHATS UP?
 
 11/10/21
