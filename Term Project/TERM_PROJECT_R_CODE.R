@@ -502,6 +502,11 @@ ntim2 <- read.csv("ntimes2.csv" , header = TRUE, sep = ",")
 ntim2 <- as.numeric(ntim2$ï..NTIMES)
 
 
+ntimAnomaly <- read.csv("ntimesANOMALY.csv" , header = TRUE, sep = ",")
+ntimAnomaly <- as.numeric(ntimAnomaly$ï..NTIMES)
+
+
+
 
 #mod1 <- depmix(Global_active_power~1, data = dfDaily1, nstates = 20, ntimes= c(1800))
 
@@ -549,17 +554,28 @@ dfAnomaly2 <- read.table("DataWithAnomalies2.txt" , header = TRUE, sep = ",")
 dfAnomaly3 <- read.table("DataWithAnomalies3.txt" , header = TRUE, sep = ",")
 
 
-#FIXES NA VALUES, CONVERTS DATE TO OBJECTS
+#FIXES NA VALUES, CONVERTS DATE TO OBJECTS, SCALE IMPORTANT DATA
+
 dfAnomaly1$Date<- as.Date(dmy(dfAnomaly1$Date))
 dfAnomaly1$Time <- dfAnomaly1$Time <- as_datetime(dfAnomaly1$Date + hms(dfAnomaly1$Time))
+dfAnomaly2$Date<- as.Date(dmy(dfAnomaly2$Date))
+dfAnomaly2$Time <- dfAnomaly1$Time <- as_datetime(dfAnomaly1$Date + hms(dfAnomaly2$Time))
 
-
-dfAnomaly1 <- read.table("DataWithAnomalies1.txt" , header = TRUE, sep = ",")
-dfAnomaly2 <- read.table("DataWithAnomalies2.txt" , header = TRUE, sep = ",")
-dfAnomaly3 <- read.table("DataWithAnomalies3.txt" , header = TRUE, sep = ",")
 
 dfAnomaly1$Global_active_power <- na_kalman(dfAnomaly1$Global_active_power)
 dfAnomaly1$Global_intensity <- na_kalman(dfAnomaly1$Global_intensity)
+
+dfAnomaly2$Global_active_power <- na_kalman(dfAnomaly2$Global_active_power)
+dfAnomaly2$Global_intensity <- na_kalman(dfAnomaly2$Global_intensity)
+
+
+dfAnomaly1$Global_active_power <- scale(dfAnomaly1$Global_active_power)
+dfAnomaly1$Global_intensity <- scale(dfAnomaly1$Global_intensity)
+
+
+dfAnomaly2$Global_active_power <- scale(dfAnomaly2$Global_active_power)
+dfAnomaly2$Global_intensity <- scale(dfAnomaly2$Global_intensity)
+
 
 
 ####### THIS FUNCTION CUTS THE DATES OF THE DATA. #############
@@ -574,6 +590,7 @@ list_of_dfs2 <- split(weeks_dfAnomaly1, weeks_dfAnomaly1$week)
 
 ## DATA ANOMALY 1
 
+
 dfAnomaly1w1 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-07" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 dfAnomaly1w2 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 dfAnomaly1w3 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
@@ -583,61 +600,126 @@ dfAnomaly1w5 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-04" & hour(dfAnomaly1$Tim
 dfAnomaly1w6 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-11"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 dfAnomaly1w7 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 dfAnomaly1w8 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-25"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w9 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w10 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w9 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-01"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w10 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-08"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w11 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-07" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w12 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w13 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w14 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w15 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-04" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w11 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-15" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w12 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-22"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w13 <- dfAnomaly1[dfAnomaly1$Date == "2010-03-01"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w14 <- dfAnomaly1[dfAnomaly1$Date == "2010-03-08"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w15 <- dfAnomaly1[dfAnomaly1$Date == "2010-03-15" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w16 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-04"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w17 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w18 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w19 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w20 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w16 <- dfAnomaly1[dfAnomaly1$Date == "2010-03-22"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w17 <- dfAnomaly1[dfAnomaly1$Date == "2010-03-29"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w18 <- dfAnomaly1[dfAnomaly1$Date == "2010-04-05"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w19 <- dfAnomaly1[dfAnomaly1$Date == "2010-04-12"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w20 <- dfAnomaly1[dfAnomaly1$Date == "2010-04-19"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w21 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-07" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w22 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w23 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w24 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w25 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-04" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w21 <- dfAnomaly1[dfAnomaly1$Date == "2010-04-26" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w22 <- dfAnomaly1[dfAnomaly1$Date == "2010-05-03"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w23 <- dfAnomaly1[dfAnomaly1$Date == "2010-05-10"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w24 <- dfAnomaly1[dfAnomaly1$Date == "2010-05-17"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w25 <- dfAnomaly1[dfAnomaly1$Date == "2010-05-24" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w26 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-04"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w27 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w28 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w29 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w30 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w26 <- dfAnomaly1[dfAnomaly1$Date == "2010-05-31"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w27 <- dfAnomaly1[dfAnomaly1$Date == "2010-06-07"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w28 <- dfAnomaly1[dfAnomaly1$Date == "2010-06-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w29 <- dfAnomaly1[dfAnomaly1$Date == "2010-06-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w30 <- dfAnomaly1[dfAnomaly1$Date == "2010-06-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w31 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-07" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w32 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w33 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w34 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w35 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-04" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w31 <- dfAnomaly1[dfAnomaly1$Date == "2010-07-05" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w32 <- dfAnomaly1[dfAnomaly1$Date == "2010-07-12"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w33 <- dfAnomaly1[dfAnomaly1$Date == "2010-07-19"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w34 <- dfAnomaly1[dfAnomaly1$Date == "2010-07-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w35 <- dfAnomaly1[dfAnomaly1$Date == "2010-08-02" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w36 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-04"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w37 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w38 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w39 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w40 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w36 <- dfAnomaly1[dfAnomaly1$Date == "2010-08-09"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w37 <- dfAnomaly1[dfAnomaly1$Date == "2010-08-16"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w38 <- dfAnomaly1[dfAnomaly1$Date == "2010-08-23"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w39 <- dfAnomaly1[dfAnomaly1$Date == "2010-08-30"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w40 <- dfAnomaly1[dfAnomaly1$Date == "2010-09-06"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w41 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-07" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w42 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-14"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w43 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-21"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w44 <- dfAnomaly1[dfAnomaly1$Date == "2009-12-28"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w45 <- dfAnomaly1[dfAnomaly1$Date == "2010-01-04" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w41 <- dfAnomaly1[dfAnomaly1$Date == "2010-09-13" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w42 <- dfAnomaly1[dfAnomaly1$Date == "2010-09-20"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w43 <- dfAnomaly1[dfAnomaly1$Date == "2010-09-27"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w44 <- dfAnomaly1[dfAnomaly1$Date == "2010-10-04"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w45 <- dfAnomaly1[dfAnomaly1$Date == "2010-10-11" & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w46 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-04"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w47 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w48 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w49 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w50 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w46 <- dfAnomaly1[dfAnomaly1$Date == "2010-10-18"   & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w47 <- dfAnomaly1[dfAnomaly1$Date == "2010-10-25"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w48 <- dfAnomaly1[dfAnomaly1$Date == "2010-11-01"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w49 <- dfAnomaly1[dfAnomaly1$Date == "2010-11-08"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w50 <- dfAnomaly1[dfAnomaly1$Date == "2010-11-15"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
 
-dfAnomaly1w51 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-11"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
-dfAnomaly1w52 <- dfAnomaly1[dfAnomaly1$Date == "2010-02-18"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+dfAnomaly1w51 <- dfAnomaly1[dfAnomaly1$Date == "2010-11-22"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+#dfAnomaly1w52 <- dfAnomaly1[dfAnomaly1$Date == "2010-11-29"  & hour(dfAnomaly1$Time) > 5 & hour(dfAnomaly1$Time) < 9,]
+
+dfAnomaly1ALL <- data.frame()
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w1)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w2)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w3)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w4)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w5)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w6)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w7)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w8)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w9)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w10)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w11)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w12)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w13)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w14)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w15)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w16)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w17)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w18)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w19)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w20)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w21)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w22)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w23)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w24)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w25)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w26)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w27)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w28)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w29)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w30)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w31)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w32)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w33)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w34)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w35)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w36)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w37)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w38)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w39)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w40)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w41)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w42)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w43)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w44)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w45)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w46)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w47)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w48)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w49)
+
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w50)
+dfAnomaly1ALL <- bind_rows(dfAnomaly1ALL, dfAnomaly1w51)
 
 #### END OF 1/ START OF 2 ############################################################
+
+
 
 #DATA ANOMALY 2
 
@@ -647,62 +729,127 @@ dfAnomaly2w3 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-21"  & hour(dfAnomaly2$Ti
 dfAnomaly2w4 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 dfAnomaly2w5 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-04" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w6 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-04"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w7 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w8 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w9 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w10 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w6 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-11"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w7 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w8 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-25"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w9 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-01"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w10 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-08"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w11 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-07" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w12 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-14"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w13 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-21"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w14 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w15 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-04" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w11 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-15" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w12 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-22"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w13 <- dfAnomaly2[dfAnomaly2$Date == "2010-03-01"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w14 <- dfAnomaly2[dfAnomaly2$Date == "2010-03-08"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w15 <- dfAnomaly2[dfAnomaly2$Date == "2010-03-15" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w16 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-04"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w17 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w18 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w19 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w20 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w16 <- dfAnomaly2[dfAnomaly2$Date == "2010-03-22"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w17 <- dfAnomaly2[dfAnomaly2$Date == "2010-03-29"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w18 <- dfAnomaly2[dfAnomaly2$Date == "2010-04-05"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w19 <- dfAnomaly2[dfAnomaly2$Date == "2010-04-12"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w20 <- dfAnomaly2[dfAnomaly2$Date == "2010-04-19"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w21 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-07" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w22 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-14"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w23 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-21"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w24 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w25 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-04" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w21 <- dfAnomaly2[dfAnomaly2$Date == "2010-04-26" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w22 <- dfAnomaly2[dfAnomaly2$Date == "2010-05-03"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w23 <- dfAnomaly2[dfAnomaly2$Date == "2010-05-10"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w24 <- dfAnomaly2[dfAnomaly2$Date == "2010-05-17"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w25 <- dfAnomaly2[dfAnomaly2$Date == "2010-05-24" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w26 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-04"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w27 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w28 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w29 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w30 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w26 <- dfAnomaly2[dfAnomaly2$Date == "2010-05-31"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w27 <- dfAnomaly2[dfAnomaly2$Date == "2010-06-07"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w28 <- dfAnomaly2[dfAnomaly2$Date == "2010-06-14"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w29 <- dfAnomaly2[dfAnomaly2$Date == "2010-06-21"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w30 <- dfAnomaly2[dfAnomaly2$Date == "2010-06-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w31 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-07" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w32 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-14"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w33 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-21"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w34 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w35 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-04" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w31 <- dfAnomaly2[dfAnomaly2$Date == "2010-07-05" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w32 <- dfAnomaly2[dfAnomaly2$Date == "2010-07-12"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w33 <- dfAnomaly2[dfAnomaly2$Date == "2010-07-19"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w34 <- dfAnomaly2[dfAnomaly2$Date == "2010-07-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w35 <- dfAnomaly2[dfAnomaly2$Date == "2010-08-02" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w36 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-04"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w37 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w38 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w39 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w40 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w36 <- dfAnomaly2[dfAnomaly2$Date == "2010-08-09"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w37 <- dfAnomaly2[dfAnomaly2$Date == "2010-08-16"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w38 <- dfAnomaly2[dfAnomaly2$Date == "2010-08-23"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w39 <- dfAnomaly2[dfAnomaly2$Date == "2010-08-30"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w40 <- dfAnomaly2[dfAnomaly2$Date == "2010-09-06"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w41 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-07" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w42 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-14"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w43 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-21"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w44 <- dfAnomaly2[dfAnomaly2$Date == "2009-12-28"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w45 <- dfAnomaly2[dfAnomaly2$Date == "2010-01-04" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w41 <- dfAnomaly2[dfAnomaly2$Date == "2010-09-13" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w42 <- dfAnomaly2[dfAnomaly2$Date == "2010-09-20"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w43 <- dfAnomaly2[dfAnomaly2$Date == "2010-09-27"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w44 <- dfAnomaly2[dfAnomaly2$Date == "2010-10-04"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w45 <- dfAnomaly2[dfAnomaly2$Date == "2010-10-11" & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w46 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-04"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w47 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w48 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w49 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w50 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w46 <- dfAnomaly2[dfAnomaly2$Date == "2010-10-18"   & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w47 <- dfAnomaly2[dfAnomaly2$Date == "2010-10-25"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w48 <- dfAnomaly2[dfAnomaly2$Date == "2010-11-01"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w49 <- dfAnomaly2[dfAnomaly2$Date == "2010-11-08"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w50 <- dfAnomaly2[dfAnomaly2$Date == "2010-11-15"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
 
-dfAnomaly2w51 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-11"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
-dfAnomaly2w52 <- dfAnomaly2[dfAnomaly2$Date == "2010-02-18"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+dfAnomaly2w51 <- dfAnomaly2[dfAnomaly2$Date == "2010-11-22"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+#dfAnomaly2w52 <- dfAnomaly2[dfAnomaly2$Date == "2010-11-29"  & hour(dfAnomaly2$Time) > 5 & hour(dfAnomaly2$Time) < 9,]
+
+#BINDING DATA
+
+dfAnomaly2ALL <- data.frame()
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w1)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w2)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w3)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w4)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w5)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w6)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w7)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w8)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w9)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w10)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w11)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w12)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w13)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w14)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w15)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w16)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w17)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w18)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w19)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w20)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w21)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w22)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w23)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w24)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w25)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w26)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w27)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w28)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w29)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w30)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w31)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w32)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w33)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w34)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w35)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w36)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w37)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w38)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w39)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w40)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w41)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w42)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w43)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w44)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w45)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w46)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w47)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w48)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w49)
+
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w50)
+dfAnomaly2ALL <- bind_rows(dfAnomaly2ALL, dfAnomaly2w51)
 
 ########## END OF DATA ANOMALY 2
 
@@ -782,14 +929,38 @@ dfAnomaly3w52 <- dfAnomaly3[dfAnomaly3$Date == "2010-02-18"  & hour(dfAnomaly3$T
 ##### END OF DATA ANOMALY 3
 
 
-plot(list_of_dfs2$`14`$Global_intensity, type='l')
 
-view(list_of_dfs2$`14`)
 
-head(dfAnomaly)
-dfDailyAnomaly <- dfAnomaly[dfAnomaly$Date == "2010-03-01" & dfAnomaly$Date <= "2010-03-05"  & hour(dfAnomaly$Time) > 5 & hour(dfAnomaly$Time) < 9,]
 
-modAnomaly<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfDailyAnomaly, nstates = 11,family=list(gaussian(),multinomial("identity")), ntimes = c(900))
+#here we can compare 1 year values between anomaly and normal data
+#we find that N states = 10 is the best fit but, I also like to run more numbers
+#this will explain a lot more of the data as we can already see divergence of the normalized
+#loglikelihood of the data. -Ali
+for(i in 4:10)
+{
+  print("MODEL 1 YEAR")
+  print(`i`)
+  mod<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfTrain, nstates = i,family=list(gaussian(),gaussian()), ntimes = ntim2)
+  fm <- fit(mod)
+  print(fm)
+  
+  print("ANOMALY")
+  print(`i`)
+  mod2<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAnomaly2ALL, nstates = i,family=list(gaussian(),gaussian()), ntimes = ntimAnomaly)
+  fm2 <- fit(mod2)
+  print(fm2)
+
+  
+}
+
+print("ANOMALY")
+mod2<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAnomaly1ALL, nstates = 10,family=list(gaussian(),gaussian()), ntimes = ntimAnomaly)
+fm2 <- fit(mod2)
+print(fm2)
+print(fb)
+
+
+modAnomaly<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfDailyAnomaly, nstates = 10,family=list(gaussian(),gaussian()), ntimes = c(900))
 fmAnomaly <- fit(modAnomaly)
 
 
