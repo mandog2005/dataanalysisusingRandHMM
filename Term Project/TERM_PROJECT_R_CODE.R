@@ -1007,13 +1007,13 @@ dfAnomaly3ALL <- bind_rows(dfAnomaly3ALL, dfAnomaly3w51)
 #loglikelihood of the data. -Ali
 for(i in 4:10)
 {
-  print("MODEL 1 YEAR")
+  print("MODEL")
   print(`i`)
   mod<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfTrain, nstates = i,family=list(gaussian(),gaussian()), ntimes = ntim2)
   fm <- fit(mod)
   print(fm)
   
-  print("ANOMALY")
+  print("ANOMALY DATASET 2")
   print(`i`)
   mod2<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAnomaly2ALL, nstates = i,family=list(gaussian(),gaussian()), ntimes = ntimAnomaly)
   fm2 <- fit(mod2)
@@ -1022,11 +1022,17 @@ for(i in 4:10)
   
 }
 
-print("ANOMALY")
-mod2<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAnomaly1ALL, nstates = 10,family=list(gaussian(),gaussian()), ntimes = ntimAnomaly)
+{
+print("MODEL")
+mod<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfTrain, nstates = 10,family=list(gaussian(),gaussian()), ntimes = ntim2)
+fm <- fit(mod)
+print(fm)
+
+print("ANOMALY DATASET 2")
+mod2<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfAnomaly2ALL, nstates = 10,family=list(gaussian(),gaussian()), ntimes = ntimAnomaly)
 fm2 <- fit(mod2)
 print(fm2)
-print(fb)
+}
 
 
 modAnomaly<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfDailyAnomaly, nstates = 10,family=list(gaussian(),gaussian()), ntimes = c(900))
@@ -1036,12 +1042,18 @@ fmAnomaly <- fit(modAnomaly)
 summary(fmAnomaly)
 summary(mod)
 
-smamod <- zoo(list_of_dfs$`14`$Global_intensity)
-smaanomaly <- zoo(list_of_dfs2$`14`$Global_intensity)
+smamod <- zoo(list_of_dfs$`10`$Global_intensity)
+smaanomaly1 <- zoo(dfAnomaly1ALL$Global_intensity)
+smaanomaly2 <- zoo(dfAnomaly2ALL$Global_intensity)
+smaanomaly3 <- zoo(dfAnomaly3ALL$Global_intensity)
+
+plot(list_of_dfs$`10`$Global_intensity, type = 'l')
 plot(list_of_dfs2$`14`$Global_intensity, type = 'l')
 
-sma1 <- rollmean(smaanomaly,20)
+#sma1 <- rollmean(smaanomaly,20)
+sma <- rollmean(smamod,20)
 sma2 <- rollmean(smamod,20)
 
-autoplot(sma1)
+autoplot(sma)
 autoplot(sma2)
+
