@@ -1039,21 +1039,36 @@ modAnomaly<- depmix(list(Global_active_power~1,Global_intensity~1), data = dfDai
 fmAnomaly <- fit(modAnomaly)
 
 
+#PLOT AREA.
+#this is where I was doing my plots.
+
+
 summary(fmAnomaly)
 summary(mod)
 
-smamod <- zoo(list_of_dfs$`10`$Global_intensity)
+
+smamod2 <- zoo(dfTest$Global_active_power)
 smaanomaly1 <- zoo(dfAnomaly1ALL$Global_intensity)
 smaanomaly2 <- zoo(dfAnomaly2ALL$Global_intensity)
 smaanomaly3 <- zoo(dfAnomaly3ALL$Global_intensity)
 
-plot(list_of_dfs$`10`$Global_intensity, type = 'l')
+#plot(list_of_dfs$`1`$Global_intensity, type = 'l')
+smamod <- zoo(list_of_dfs$`14`$Global_intensity)
+smamod <- rollmean(smamod,20)
+lines(smamod,col = "red")
+
+dfDaily1Y1 <- 
+
 plot(list_of_dfs2$`14`$Global_intensity, type = 'l')
 
-#sma1 <- rollmean(smaanomaly,20)
-sma <- rollmean(smamod,20)
-sma2 <- rollmean(smamod,20)
 
-autoplot(sma)
-autoplot(sma2)
+smaModGP <- rollmean(smamod2,30)
+smaAnomaly1 <- rollmean(smaanomaly1,30)
+smaAnomaly2 <- rollmean(smaanomaly2,30)
+smaAnomaly3 <- rollmean(smaanomaly3,30)
 
+
+autoplot(smamod)
+#autoplot(smaModGP)
+#autoplot(smaAnomaly2)
+#autoplot(smaAnomaly3)
